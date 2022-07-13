@@ -1,4 +1,4 @@
-import ".cart.css";
+import "./cart.css";
 
 const Cart = () =>{
     return(
