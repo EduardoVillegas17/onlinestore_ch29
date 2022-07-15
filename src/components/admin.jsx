@@ -4,7 +4,8 @@ import "./admin.css";
 const Admin = () => {
     const [coupon,setCoupon]=useState({});
     const [product,setProduct]=useState({});
-    
+    const [allCoupons, setAllCoupons]=useState([]);
+    const [allProducts, setAllProducts]=useState([]);
 
     const handleCouponChenge =(e)=>{
         let name = e.target.name;
@@ -16,11 +17,18 @@ const Admin = () => {
         setCoupon(copy);
     };
     const saveCoupon = ()=>{
-        let copy={ ...coupon};
-        let discount =parseFloat(copy.discount);
-        copy.discount=discount;
+        let coupo2beSaved={ ...coupon};
+        let discount =parseFloat(coupo2beSaved.discount);
+        coupo2beSaved.discount=discount;
 
-        console.log(copy);
+        console.log(coupo2beSaved);
+        //todo: send obj to the server
+
+        //add it to the state array
+        let copyCoupons=[...allCoupons];
+        copyCoupons.push(coupo2beSaved);
+        setAllCoupons(copyCoupons);
+
     };
 
     const handleProductChenge = (e)=>{
@@ -35,6 +43,13 @@ const Admin = () => {
         let copy={...product};
         copy.price=parseFloat(copy.price);
         console.log(copy);
+
+        //todo:save prod on server
+
+        //save prod on state array
+        let copyAllProds=[...allProducts];
+        copyAllProds.push(copy);
+        setAllProducts(copyAllProds);
     };
     
     return ( 
@@ -49,6 +64,12 @@ const Admin = () => {
                         <div className="my-control">
                             <label>Title</label>
                             <input name="title" onClick={handleProductChenge} type="text" />
+                        </div>
+
+                        <div className="product-list">
+                            <ul>
+                                {allProducts.map((prod,index)=> <li key={index}>{prod.title}-${prod.price}</li>)}
+                            </ul>
                         </div>
 
                         <div className="my-control">
@@ -91,6 +112,11 @@ const Admin = () => {
 
                         <div className="my-control">
                             <button onClick={saveCoupon} className="btn-sm btn-primary">Save Coupon</button>
+                        </div>
+                        <div className="coupons-list">
+                            <ul>
+                                {allCoupons.map((coupon, index)=> <li key={index}> {coupon.code}-{coupon.discount}% off</li>)}
+                            </ul>
                         </div>
                     </div>
                 </section>
