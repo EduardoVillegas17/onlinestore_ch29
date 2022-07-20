@@ -9,7 +9,7 @@ const Product = (props)=>{
     let globalAddProd = useContext(StoreContext).addProduct;
 
 
-    const QuantityChange=(val)=>{
+    const quantityChange=(val)=>{
         setQuantity(val);
     };
 
@@ -19,8 +19,12 @@ const Product = (props)=>{
     };
 
     const handleAdd=()=>{
-        console.log('Adding');
-        globalAddProd();//call the global function
+        
+        
+        let prod4Cart = {...props.data, quantity};
+        //prod4Cart.quantity=quantity;
+
+        globalAddProd(prod4Cart); //Call the global fn
     };
     return(
         <div className="product">
@@ -28,7 +32,7 @@ const Product = (props)=>{
             <h2>{props.data.title}</h2>
             <label>Price: ${props.data.price.toFixed(2)}</label>
             <label>Total: ${getTotal()}</label>
-            <QuantityPicker onChange={QuantityChange}></QuantityPicker>
+            <QuantityPicker onChange={quantityChange}></QuantityPicker>
             <button onClick={handleAdd} className="btn btn-primary btn-sm">Add</button>
             
         </div>
