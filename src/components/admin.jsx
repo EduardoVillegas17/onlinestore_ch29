@@ -1,4 +1,5 @@
 import { useState } from "react";
+import DataService from "../services/dataService";
 import "./admin.css";
 
 const Admin = () => {
@@ -13,7 +14,7 @@ const Admin = () => {
         
         let copy={...coupon};//create a copy
         copy[name] = value;//modify copy
-        coupon[name] = value;
+        //coupon[name] = value;
         setCoupon(copy);
     };
     const saveCoupon = ()=>{
@@ -44,8 +45,9 @@ const Admin = () => {
         copy.price=parseFloat(copy.price);
         console.log(copy);
 
-        //todo:save prod on server
-
+        //save copy on server
+        let service = new DataService();
+        service.setProduct(copy);
         //save prod on state array
         let copyAllProds=[...allProducts];
         copyAllProds.push(copy);
